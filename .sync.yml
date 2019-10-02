@@ -1,0 +1,28 @@
+---
+
+.gitlab-ci.yml:
+  delete: true
+
+.rubocop.yml:
+  selected_profile: off
+
+.travis.yml:
+  unmanaged: true
+
+appveyor.yml:
+  delete: true
+
+Gemfile:
+  optional:
+    ":system_tests":
+      - gem: beaker
+      - gem: beaker-module_install_helper
+      - gem: beaker-puppet_install_helper
+      - gem: beaker-rspec
+      - gem: beaker-vagrant
+      - gem: deep_merge
+      - gem: serverspec
+
+spec/spec_helper.rb:
+  coverage_report: true
+  minimum_code_coverage_percentage: 100
