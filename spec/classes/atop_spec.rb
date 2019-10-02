@@ -8,4 +8,17 @@ describe 'atop' do
       it { is_expected.to compile }
     end
   end
+
+  context 'unsupported operating system' do
+    describe 'atop class without any parameters on Solaris/Nexenta' do
+      let(:facts) do
+        {
+          :osfamily        => 'Solaris',
+          :operatingsystem => 'Nexenta',
+        }
+      end
+
+      it { expect { is_expected.to contain_package('atop') }.to raise_error(Puppet::Error, /Solaris not supported/) }
+    end
+  end
 end

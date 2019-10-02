@@ -5,4 +5,15 @@
 # @example
 #   include atop
 class atop {
+  case $::osfamily {
+    'RedHat': {
+
+    }
+    'Debian': {
+
+    }
+    default: {
+      fail("${::osfamily} not supported")
+    }
+  }
 }
