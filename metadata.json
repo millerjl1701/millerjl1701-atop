@@ -4,7 +4,7 @@
   "author": "millerjl1701",
   "summary": "Puppet module for installation, configuration, and management of the atop performance monitor package.",
   "license": "Apache-2.0",
-  "source": "https://github.com/millerjl1701/puppet-atop",
+  "source": "https://github.com/millerjl1701/millerjl1701-atop",
   "dependencies": [
     {
       "name": "puppetlabs-stdlib",
