@@ -1,5 +1,10 @@
 fixtures:
   forge_modules:
+    epel: "stahnma/epel"
     stdlib: "puppetlabs/stdlib"
+  repositories:
+    yumrepo_core:
+      repo: "git://github.com/puppetlabs/puppetlabs-yumrepo_core"
+      puppet_version: ">= 6.0.0"
   symlinks:
     atop: "#{source_dir}"
