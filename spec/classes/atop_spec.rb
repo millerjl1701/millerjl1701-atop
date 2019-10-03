@@ -5,7 +5,27 @@ describe 'atop' do
     context "on #{os}" do
       let(:facts) { os_facts }
 
-      it { is_expected.to compile }
+      context "atop class without any parameters changed from defaults" do
+        it { is_expected.to compile }
+
+        if os_facts[:os]['family'] == 'RedHat'
+          it { is_expected.to contain_class('atop::repo') }
+          it { is_expected.to_not contain_class('epel') }
+        else
+          it { is_expected.to_not contain_class('atop::repo') }
+          it { is_expected.to_not contain_class('epel') }
+        end
+      end
+
+      context "atop class with manage_epel set to true" do
+        let(:params) { { :manage_epel => true } }
+
+        if os_facts[:os]['family'] == 'RedHat'
+          it { is_expected.to contain_class('epel') }
+        else
+          it { is_expected.to_not contain_class('epel') }
+        end
+      end
     end
   end
 

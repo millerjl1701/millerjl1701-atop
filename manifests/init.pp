@@ -4,10 +4,12 @@
 #
 # @example
 #   include atop
-class atop {
+class atop (
+  Boolean $manage_epel = false,
+) {
   case $::osfamily {
     'RedHat': {
-
+      contain atop::repo
     }
     'Debian': {
 
