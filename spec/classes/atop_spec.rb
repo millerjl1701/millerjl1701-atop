@@ -10,11 +10,16 @@ describe 'atop' do
 
         if os_facts[:os]['family'] == 'RedHat'
           it { is_expected.to contain_class('atop::repo') }
+          it { is_expected.to contain_class('atop::repo').that_comes_before('Class[atop::install]') }
           it { is_expected.to_not contain_class('epel') }
         else
           it { is_expected.to_not contain_class('atop::repo') }
           it { is_expected.to_not contain_class('epel') }
         end
+
+        it { is_expected.to contain_class('atop::install') }
+
+        it { is_expected.to contain_package('atop') }
       end
 
       context "atop class with manage_epel set to true" do

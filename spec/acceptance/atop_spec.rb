@@ -18,5 +18,9 @@ describe 'atop class:', unless: UNSUPPORTED_PLATFORMS.include?(os[:family]) do
         it { should be_enabled }
       end
     end
+
+    describe package('atop') do
+      it { should be_installed }
+    end
   end
 end
