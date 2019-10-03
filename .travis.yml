@@ -26,6 +26,14 @@ matrix:
         - 'bundle show puppet'
         - 'bundle exec rake metadata_lint syntax spec'
     - rvm: 2.4.5
+      env: PUPPET_INSTALL_TYPE=agent BEAKER_IS_PE=no BEAKER_debug=true BEAKER_PUPPET_COLLECTION=puppet5 BEAKER_hypervisor=docker BEAKER_set=docker/centos-6
+      script: bundle exec rake beaker
+      services: docker
+    - rvm: 2.5.3
+      env: PUPPET_INSTALL_TYPE=agent BEAKER_IS_PE=no BEAKER_debug=true BEAKER_PUPPET_COLLECTION=puppet6 BEAKER_hypervisor=docker BEAKER_set=docker/centos-6
+      script: bundle exec rake beaker
+      services: docker
+    - rvm: 2.4.5
       env: PUPPET_INSTALL_TYPE=agent BEAKER_IS_PE=no BEAKER_debug=true BEAKER_PUPPET_COLLECTION=puppet5 BEAKER_hypervisor=docker BEAKER_set=docker/centos-7
       script: bundle exec rake beaker
       services: docker
@@ -34,11 +42,35 @@ matrix:
       script: bundle exec rake beaker
       services: docker
     - rvm: 2.4.5
+      env: PUPPET_INSTALL_TYPE=agent BEAKER_IS_PE=no BEAKER_debug=true BEAKER_PUPPET_COLLECTION=puppet5 BEAKER_hypervisor=docker BEAKER_set=docker/debian-8
+      script: bundle exec rake beaker
+      services: docker
+    - rvm: 2.5.3
+      env: PUPPET_INSTALL_TYPE=agent BEAKER_IS_PE=no BEAKER_debug=true BEAKER_PUPPET_COLLECTION=puppet6 BEAKER_hypervisor=docker BEAKER_set=docker/debian-8
+      script: bundle exec rake beaker
+      services: docker
+    - rvm: 2.4.5
+      env: PUPPET_INSTALL_TYPE=agent BEAKER_IS_PE=no BEAKER_debug=true BEAKER_PUPPET_COLLECTION=puppet5 BEAKER_hypervisor=docker BEAKER_set=docker/debian-9
+      script: bundle exec rake beaker
+      services: docker
+    - rvm: 2.5.3
+      env: PUPPET_INSTALL_TYPE=agent BEAKER_IS_PE=no BEAKER_debug=true BEAKER_PUPPET_COLLECTION=puppet6 BEAKER_hypervisor=docker BEAKER_set=docker/debian-9
+      script: bundle exec rake beaker
+      services: docker
+    - rvm: 2.4.5
       env: PUPPET_INSTALL_TYPE=agent BEAKER_IS_PE=no BEAKER_debug=true BEAKER_PUPPET_COLLECTION=puppet5 BEAKER_hypervisor=docker BEAKER_set=docker/ubuntu-1604
       script: bundle exec rake beaker
       services: docker
     - rvm: 2.5.3
       env: PUPPET_INSTALL_TYPE=agent BEAKER_IS_PE=no BEAKER_debug=true BEAKER_PUPPET_COLLECTION=puppet6 BEAKER_hypervisor=docker BEAKER_set=docker/ubuntu-1604
+      script: bundle exec rake beaker
+      services: docker
+    - rvm: 2.4.5
+      env: PUPPET_INSTALL_TYPE=agent BEAKER_IS_PE=no BEAKER_debug=true BEAKER_PUPPET_COLLECTION=puppet5 BEAKER_hypervisor=docker BEAKER_set=docker/ubuntu-1804
+      script: bundle exec rake beaker
+      services: docker
+    - rvm: 2.5.3
+      env: PUPPET_INSTALL_TYPE=agent BEAKER_IS_PE=no BEAKER_debug=true BEAKER_PUPPET_COLLECTION=puppet6 BEAKER_hypervisor=docker BEAKER_set=docker/ubuntu-1804
       script: bundle exec rake beaker
       services: docker
 branches:
