@@ -16,6 +16,7 @@ Gemfile:
   optional:
     ":system_tests":
       - gem: beaker
+      - gem: beaker-docker
       - gem: beaker-module_install_helper
       - gem: beaker-puppet_install_helper
       - gem: beaker-rspec
