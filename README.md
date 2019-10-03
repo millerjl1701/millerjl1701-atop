@@ -78,6 +78,8 @@ Default: 'medium-loud'.
 
 In the Limitations section, list any incompatibilities, known issues, or other warnings.
 
+Debian 9 testing via travis is currently disabled as atopacctd does not run in containers correctly. Testing Debian 9 using vagrant/virtualbox functions correctly. This was discussed in: [https://github.com/Atoptool/atop/issues/11](https://github.com/Atoptool/atop/issues/11)
+
 ## Development
 
 In the Development section, tell other users the ground rules for contributing to your project and how they should submit their work.
