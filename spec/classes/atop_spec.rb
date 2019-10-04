@@ -19,7 +19,7 @@ describe 'atop' do
 
         it { is_expected.to contain_class('atop::install') }
 
-        it { is_expected.to contain_package('atop') }
+        it { is_expected.to contain_package('atop').with_ensure('present') }
       end
 
       context "atop class with manage_epel set to true" do
@@ -30,6 +30,24 @@ describe 'atop' do
         else
           it { is_expected.to_not contain_class('epel') }
         end
+      end
+
+      context "atop class with manage_package set to false" do
+        let(:params) { { :manage_package => false } }
+
+        it { is_expected.to_not contain_package('atop') }
+      end
+
+      context "atop class with package_ensure set to 2.4.0" do
+        let(:params) { { :package_ensure => '2.4.0' } }
+
+        it { is_expected.to contain_package('atop').with_ensure('2.4.0') }
+      end
+
+      context "atop class with package_name set to foo" do
+        let(:params) { { :package_name => 'foo' } }
+
+        it { is_expected.to contain_package('foo') }
       end
     end
   end
