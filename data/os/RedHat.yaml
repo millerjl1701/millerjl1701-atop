@@ -1,2 +1,3 @@
 ---
-{}
+
+atop::defaults_file: /etc/sysconfig/atop

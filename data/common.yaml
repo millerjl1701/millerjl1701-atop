@@ -1,5 +1,6 @@
 ---
 
+atop::defaults_file_template: 'atop/atop_defaults.erb'
 atop::manage_epel: false
 atop::manage_package: true
 atop::package_ensure: present

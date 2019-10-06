@@ -1,0 +1,7 @@
+# puppet managed file. local changes will be overwritten
+#
+# /etc/default/atop
+
+INTERVAL=<%= @_loginterval %>
+LOGPATH="/var/log/atop"
+OUTFILE="$LOGPATH/daily.log"

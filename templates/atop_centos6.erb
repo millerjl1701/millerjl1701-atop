@@ -1,0 +1,15 @@
+# puppet managed file. local changes will be overwritten
+#
+# sysconfig atop
+#
+
+# Current Day format
+CURDAY=`date +%Y%m%d`
+# Log files path
+LOGPATH=/var/log/atop
+# Binaries path
+BINPATH=/usr/bin
+# PID File
+PIDFILE=/var/run/atop.pid
+# interval (default 10 minutes)
+INTERVAL=<%= @_loginterval %>

@@ -1,0 +1,10 @@
+# puppet managed file. local changes will be overwritten
+#
+# variables that can be overwritten by config file
+#
+# options (defaults to -R)
+LOGOPTS="<%= @_logopts %>"
+# interval (default 10 minutes)
+LOGINTERVAL=<%= @_loginterval %>
+# delete logfiles older than N days (defaults to 28)
+LOGGENERATIONS=<%= @_loggenerations %>

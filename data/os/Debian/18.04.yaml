@@ -1,0 +1,3 @@
+---
+
+atop::defaults_file_template: 'atop/atop_ubuntu1804.erb'
