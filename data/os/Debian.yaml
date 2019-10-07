@@ -3,3 +3,5 @@
 atop::defaults_file: /etc/default/atop
 atop::process_accting_package_name: acct
 atop::process_accting_service_name: acct
+atop::service_atopacctd_enable: false
+atop::service_atopacctd_ensure: stopped

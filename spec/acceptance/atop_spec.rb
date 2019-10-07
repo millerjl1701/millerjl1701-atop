@@ -61,8 +61,8 @@ describe 'atop class:', unless: UNSUPPORTED_PLATFORMS.include?(os[:family]) do
         end
 
         describe service('atopacct') do
-          it { should be_enabled }
-          it { should be_running }
+          it { should_not be_enabled }
+          it { should_not be_running }
         end
       end
     else
@@ -102,8 +102,8 @@ describe 'atop class:', unless: UNSUPPORTED_PLATFORMS.include?(os[:family]) do
           it { should_not be_running }
         end
         describe service('atopacct') do
-          it { should be_enabled }
-          it { should be_running }
+          it { should_not be_enabled }
+          it { should_not be_running }
         end
       end
 

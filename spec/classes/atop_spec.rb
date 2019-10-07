@@ -47,8 +47,8 @@ describe 'atop' do
               'enable' => 'false',
             ) }
             it { is_expected.to contain_service('atopacct').with(
-              'ensure'  => 'running',
-              'enable'  => 'true',
+              'ensure'  => 'stopped',
+              'enable'  => 'false',
             ) }
           end
 
@@ -92,8 +92,8 @@ describe 'atop' do
               'enable' => 'false',
             ) }
             it { is_expected.to contain_service('atopacct').with(
-              'ensure'  => 'running',
-              'enable'  => 'true',
+              'ensure'  => 'stopped',
+              'enable'  => 'false',
             ) }
           end
         end

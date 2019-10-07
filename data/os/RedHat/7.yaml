@@ -4,3 +4,5 @@ atop::manage_service_atopacctd: true
 atop::process_accting_service_enable: false
 atop::process_accting_service_ensure: stopped
 atop::process_accting_service_name: psacct
+atop::service_atopacctd_enable: false
+atop::service_atopacctd_ensure: stopped
