@@ -1,7 +1,25 @@
 ---
 
 atop::defaults_file_template: 'atop/atop_defaults.erb'
+atop::loggenerations: 28
+atop::loginterval: 600
+atop::logopts: '-R'
 atop::manage_epel: false
 atop::manage_package: true
+atop::manage_service_atop: true
+atop::manage_service_atopacctd: true
 atop::package_ensure: present
 atop::package_name: atop
+atop::process_accting_package_ensure: present
+atop::process_accting_package_manage: true
+atop::process_accting_package_name: psacct
+atop::process_accting_service_enable: false
+atop::process_accting_service_ensure: stopped
+atop::process_accting_service_manage: true
+atop::process_accting_service_name: psacct
+atop::service_atop_enable: true
+atop::service_atop_ensure: running
+atop::service_atop_name: atop
+atop::service_atopacctd_enable: true
+atop::service_atopacctd_ensure: running
+atop::service_atopacctd_name: atopacct

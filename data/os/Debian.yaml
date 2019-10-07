@@ -1,3 +1,5 @@
 ---
 
 atop::defaults_file: /etc/default/atop
+atop::process_accting_package_name: acct
+atop::process_accting_service_name: acct

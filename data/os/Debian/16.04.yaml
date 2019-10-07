@@ -1,3 +1,7 @@
 ---
 
 atop::defaults_file_template: 'atop/atop_ubuntu1604.erb'
+atop::manage_service_atopacctd: false
+atop::process_accting_service_enable: true
+atop::process_accting_service_ensure: running
+atop::process_accting_service_name: acct

@@ -1,3 +1,4 @@
 ---
 
 atop::defaults_file: /etc/sysconfig/atop
+atop::process_accting_package_name: psacct

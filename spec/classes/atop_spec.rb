@@ -8,10 +8,20 @@ describe 'atop' do
       context "atop class without any parameters changed from defaults" do
         it { is_expected.to compile }
 
+        it { is_expected.to contain_class('atop::install') }
+        it { is_expected.to contain_class('atop::config') }
+        it { is_expected.to contain_class('atop::service') }
+        it { is_expected.to contain_class('atop::install').that_comes_before('Class[atop::config]') }
+        it { is_expected.to contain_class('atop::config').that_notifies('Class[atop::service]') }
+
+        it { is_expected.to contain_package('atop').with_ensure('present') }
+
         if os_facts[:os]['family'] == 'RedHat'
           it { is_expected.to contain_class('atop::repo') }
           it { is_expected.to contain_class('atop::repo').that_comes_before('Class[atop::install]') }
           it { is_expected.to_not contain_class('epel') }
+
+          it { is_expected.to contain_package('psacct').with_ensure('present') }
 
           it { is_expected.to contain_file('/etc/sysconfig/atop').with(
             'ensure' => 'present',
@@ -23,12 +33,30 @@ describe 'atop' do
 
           if os_facts[:os]['release']['major'] == '6'
             it { is_expected.to contain_file('/etc/sysconfig/atop').with_content(/INTERVAL=600/) }
+
+            it { is_expected.to contain_service('psacct').with(
+              'ensure' => 'running',
+              'enable' => 'true',
+            ) }
+            it { is_expected.to_not contain_service('atopacct') }
           else
             it { is_expected.to contain_file('/etc/sysconfig/atop').with_content(/LOGINTERVAL=600/) }
+
+            it { is_expected.to contain_service('psacct').with(
+              'ensure' => 'stopped',
+              'enable' => 'false',
+            ) }
+            it { is_expected.to contain_service('atopacct').with(
+              'ensure'  => 'running',
+              'enable'  => 'true',
+            ) }
           end
+
         else
           it { is_expected.to_not contain_class('atop::repo') }
           it { is_expected.to_not contain_class('epel') }
+
+          it { is_expected.to contain_package('acct').with_ensure('present') }
 
           it { is_expected.to contain_file('/etc/default/atop').with(
             'ensure' => 'present',
@@ -42,22 +70,38 @@ describe 'atop' do
             it do
               is_expected.to contain_file('/etc/default/atop').with_content(/INTERVAL=600/)
             end
+            it { is_expected.to contain_service('acct').with(
+              'ensure' => 'running',
+              'enable' => 'true',
+            ) }
+            it { is_expected.to_not contain_service('atopacct') }
           when '8'
             it do
               is_expected.to contain_file('/etc/default/atop').with_content(/INTERVAL=600/)
             end
+            it { is_expected.to contain_service('acct').with(
+              'ensure' => 'running',
+              'enable' => 'true',
+            ) }
+            it { is_expected.to_not contain_service('atopacct') }
           else
             # noop since no valid parameters for ubuntu 18.04 or Debian 9/10
             it { is_expected.to contain_file('/etc/default/atop').with_content(/# this file is no longer used and will be removed in a future release/) }
+            it { is_expected.to contain_service('acct').with(
+              'ensure' => 'stopped',
+              'enable' => 'false',
+            ) }
+            it { is_expected.to contain_service('atopacct').with(
+              'ensure'  => 'running',
+              'enable'  => 'true',
+            ) }
           end
         end
 
-        it { is_expected.to contain_class('atop::install') }
-        it { is_expected.to contain_class('atop::config') }
-        it { is_expected.to contain_class('atop::install').that_comes_before('Class[atop::config]') }
-
-        it { is_expected.to contain_package('atop').with_ensure('present') }
-
+        it { is_expected.to contain_service('atop').with(
+          'ensure' => 'running',
+          'enable' => 'true',
+        ) }
       end
 
       context "atop class with defaults_file set to /etc/atop.conf" do
@@ -149,6 +193,18 @@ describe 'atop' do
         it { is_expected.to_not contain_package('atop') }
       end
 
+      context "atop class with manage_service_atop set to false" do
+        let(:params) { { :manage_service_atop => false } }
+
+        it { is_expected.to_not contain_service('atop') }
+      end
+
+      context "atop class with manage_service_atopacctd set to false" do
+        let(:params) { { :manage_service_atopacctd => false } }
+
+        it { is_expected.to_not contain_service('atopacct') }
+      end
+
       context "atop class with package_ensure set to 2.4.0" do
         let(:params) { { :package_ensure => '2.4.0' } }
 
@@ -159,6 +215,104 @@ describe 'atop' do
         let(:params) { { :package_name => 'foo' } }
 
         it { is_expected.to contain_package('foo') }
+      end
+
+      context "atop class with process_accting_package_ensure set to absent" do
+        let(:params) { { :process_accting_package_ensure => 'absent' } }
+
+        if os_facts[:os]['family'] == 'RedHat'
+          it { is_expected.to contain_package('psacct').with_ensure('absent') }
+        else
+          it { is_expected.to contain_package('acct').with_ensure('absent') }
+        end
+      end
+
+      context "atop class with process_accting_package_manage set to false" do
+        let(:params) { { :process_accting_package_manage => false } }
+
+        if os_facts[:os]['family'] == 'RedHat'
+          it { is_expected.to_not contain_package('psacct') }
+        else
+          it { is_expected.to_not contain_package('acct') }
+        end
+      end
+
+      context "atop class with process_accting_package_name set to foo" do
+        let(:params) { { :process_accting_package_name => 'foo' } }
+
+        it { is_expected.to contain_package('foo').with_ensure('present') }
+      end
+
+      context "atop class with process_accting_service_enable set to true" do
+        let(:params) { { :process_accting_service_manage => true, :process_accting_service_enable => true, } }
+
+        if os_facts[:os]['family'] == 'RedHat'
+          it { is_expected.to contain_service('psacct').with_enable('true') }
+        else
+          it { is_expected.to contain_service('acct').with_enable('true') }
+        end
+      end
+
+      context "atop class with process_accting_service_ensure set to running" do
+        let(:params) { { :process_accting_service_manage => true, :process_accting_service_ensure => 'running', } }
+
+        if os_facts[:os]['family'] == 'RedHat'
+          it { is_expected.to contain_service('psacct').with_ensure('running') }
+        else
+          it { is_expected.to contain_service('acct').with_ensure('running') }
+        end
+      end
+
+      context "atop class with process_accting_service_manage set to false" do
+        let(:params) { { :process_accting_service_manage => false } }
+
+        if os_facts[:os]['family'] == 'RedHat'
+          it { is_expected.to_not contain_service('psacct') }
+        else
+          it { is_expected.to_not contain_service('acct') }
+        end
+      end
+
+      context "atop class with process_accting_service_name set to foo" do
+        let(:params) { { :process_accting_service_name => 'foo' } }
+
+        it { is_expected.to contain_service('foo') }
+      end
+
+      context "atop class with service_atop_enable set to false" do
+        let(:params) { { :manage_service_atop => true, :service_atop_enable => false, } }
+
+        it { is_expected.to contain_service('atop').with_enable('false') }
+      end
+
+      context "atop class with service_atop_ensure set to stopped" do
+        let(:params) { { :manage_service_atop => true, :service_atop_ensure => 'stopped', } }
+
+        it { is_expected.to contain_service('atop').with_ensure('stopped') }
+      end
+
+      context "atop class with service_atop_name set to bar" do
+        let(:params) { { :service_atop_name => 'bar' } }
+
+        it { is_expected.to contain_service('bar') }
+      end
+
+      context "atop class with service_atopacctd_enable set to false" do
+        let(:params) { { :manage_service_atopacctd => true, :service_atopacctd_name => 'atopacctd', :service_atopacctd_enable => false, } }
+
+        it { is_expected.to contain_service('atopacctd').with_enable('false') }
+      end
+
+      context "atop class with service_atopacctd_ensure set to stopped" do
+        let(:params) { { :manage_service_atopacctd => true, :service_atopacctd_name => 'atopacctd', :service_atopacctd_ensure => 'stopped', } }
+
+        it { is_expected.to contain_service('atopacctd').with_ensure('stopped') }
+      end
+
+      context "atop class with service_atopacctd_name set to baz" do
+        let(:params) { { :manage_service_atopacctd => true, :service_atopacctd_name => 'baz' } }
+
+        it { is_expected.to contain_service('baz') }
       end
     end
   end
