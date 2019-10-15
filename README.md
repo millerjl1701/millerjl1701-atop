@@ -54,6 +54,7 @@ All parameters for the atop module are contained in the main `atop` class. In or
 Some examples of using the module:
 
 ### Install and configure atop, process accounting and epel on 'osfamily == RedHat'
+
 ```puppet
 class { 'atop':
   manage_epel => true,
@@ -61,6 +62,7 @@ class { 'atop':
 ```
 
 ### Install and configure atop but no process accounting pieces
+
 ```puppet
 class { 'atop':
   manage_package                 => true,
