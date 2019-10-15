@@ -13,11 +13,11 @@ master branch: [![Build Status](https://secure.travis-ci.org/millerjl1701/miller
 4. [Reference](#reference)
 5. [Limitations - OS compatibility, etc.](#limitations)
 6. [Development - Guide for contributing to the module](#development)
-7. [Credits](#credits)
+7. [Acknowledgements](#acknowledgements)
 
 ## Description
 
-This module manages the installation, configuration and state of the system and process monitor services provided by the atop package. 
+This module manages the installation, configuration and state of the system and process monitor services provided by the atop package.
 
 The best description of what atop does comes directly from the atop web site:
 
@@ -49,7 +49,7 @@ This module was written for Puppet 5/6 and depends on the following modules:
 
 ## Usage
 
-All parameters for the atop module are contained in the main `atop` class. In order to see how to provide the parameters via hiera, see the hiera.yaml file and the data directory. 
+All parameters for the atop module are contained in the main `atop` class. In order to see how to provide the parameters via hiera, see the hiera.yaml file and the data directory.
 
 Some examples of using the module:
 
@@ -87,8 +87,8 @@ This module does not currently handle the installation and configuration of the 
 
 ## Development
 
-This module uses the [Puppet Development Kit](https://puppet.com/docs/pdk/1.x/pdk.html) for developing, validating, and testing the module. In addition to running acceptance tests locally using vagrant/virtualbox, GitHub Travis CI tests are performed according to the .travis.yml file. 
+This module uses the [Puppet Development Kit](https://puppet.com/docs/pdk/1.x/pdk.html) for developing, validating, and testing the module. In addition to running acceptance tests locally using vagrant/virtualbox, GitHub Travis CI tests are performed according to the .travis.yml file.
 
-## Credits
+## Acknowledgements
 
-The atop system and process monitor is authored and maintained by Gerlof Langeveld [gerlof.langeveld@atoptool.nl](mailto:gerlof.langeveld@atoptool.nl).
+The atop system and process monitor is authored and maintained by Gerlof Langeveld [gerlof.langeveld@atoptool.nl](mailto:gerlof.langeveld@atoptool.nl). Thank you for providing us with this tool!
