@@ -2,7 +2,7 @@
   "name": "millerjl1701-atop",
   "version": "0.1.0",
   "author": "millerjl1701",
-  "summary": "Puppet module for installation, configuration, and management of the atop performance monitor package.",
+  "summary": "Puppet module for installation, configuration, and management of the atop performance monitor.",
   "license": "Apache-2.0",
   "source": "https://github.com/millerjl1701/millerjl1701-atop",
   "dependencies": [

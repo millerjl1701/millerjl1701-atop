@@ -1,9 +1,7 @@
-# @summary A short summary of the purpose of this class
+# @api private
 #
-# A description of what this class does
+# This class is called from the main class to install atop.
 #
-# @example
-#   include atop::install
 class atop::install {
   assert_private('atop::install is a private class')
 

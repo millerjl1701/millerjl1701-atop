@@ -1,9 +1,7 @@
-# @summary A short summary of the purpose of this class
+# @api private
 #
-# A description of what this class does
+# This class is called from the main class to configure the atop service.
 #
-# @example
-#   include atop::config
 class atop::config {
   assert_private('atop::config is a private class')
 

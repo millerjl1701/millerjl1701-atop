@@ -326,7 +326,7 @@ describe 'atop' do
         }
       end
 
-      it { expect { is_expected.to contain_package('atop') }.to raise_error(Puppet::Error, /Solaris not supported/) }
+      it { expect { is_expected.to contain_package('atop') }.to raise_error(Puppet::PreformattedError, /expects a value for parameter/) }
     end
   end
 end

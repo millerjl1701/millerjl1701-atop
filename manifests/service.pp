@@ -1,6 +1,6 @@
-# @summary A short summary of the purpose of this class
+# @api private
 #
-# A description of what this class does
+# This class is called from the main class to manage the atop service.
 #
 # @example
 #   include atop::service

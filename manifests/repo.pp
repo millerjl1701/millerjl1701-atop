@@ -1,6 +1,6 @@
 # @api private
 #
-# This class manages the addition of needed repositories for atop.
+# This class is called from the main class to add epel if desired.
 #
 class atop::repo {
   assert_private('atop::repo is a private class')
