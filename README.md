@@ -1,8 +1,6 @@
 # atop
 
-Welcome to your new module. A short overview of the generated parts can be found in the PDK documentation at https://puppet.com/pdk/latest/pdk_generating_modules.html .
-
-The README template below provides a starting point with details about what information to include in your README.
+master branch: [![Build Status](https://secure.travis-ci.org/millerjl1701/millerjl1701-atop.png?branch=master)](http://travis-ci.org/millerjl1701/millerjl1701-atop)
 
 #### Table of Contents
 
@@ -12,78 +10,83 @@ The README template below provides a starting point with details about what info
     * [Setup requirements](#setup-requirements)
     * [Beginning with atop](#beginning-with-atop)
 3. [Usage - Configuration options and additional functionality](#usage)
-4. [Limitations - OS compatibility, etc.](#limitations)
-5. [Development - Guide for contributing to the module](#development)
+4. [Reference](#reference)
+5. [Limitations - OS compatibility, etc.](#limitations)
+6. [Development - Guide for contributing to the module](#development)
+7. [Credits](#credits)
 
 ## Description
 
-Briefly tell users why they might want to use your module. Explain what your module does and what kind of problems users can solve with it.
+This module manages the installation, configuration and state of the system and process monitor services provided by the atop package. 
 
-This should be a fairly short description helps the user decide if your module is what they want.
+The best description of what atop does comes directly from the atop web site:
+
+> Atop is an ASCII full-screen performance monitor for Linux that is capable of reporting the activity of all processes (even if processes have finished during the interval), daily logging of system and process activity for long-term analysis, highlighting overloaded system resources by using colors, etc. At regular intervals, it shows system-level activity related to the CPU, memory, swap, disks (including LVM) and network layers, and for every process (and thread) it shows e.g. the CPU utilization, memory growth, disk utilization, priority, username, state, and exit code.
+
+For more detailed information and documentation concerning atop, please see:
+
+* [https://www.atoptool.nl](https://www.atoptool.nl)
+* [https://github.com/Atoptool/atop](https://github.com/Atoptool/atop)
 
 ## Setup
 
-### What atop affects **OPTIONAL**
+### What atop affects
 
-If it's obvious what your module touches, you can skip this section. For example, folks can probably figure out that your mysql_instance module affects their MySQL instances.
+The module installs and configures the atop service. Additionally, atop can also use process accounting provided by the kernel. Depending on the operating system, defaults have been put in place to allow for both atop and atopacctd services to run at startup. This includes the installation and configuration of the operating system appropriate package and service for processing accounting. Please see the data directory for how each operating system will be configured.
 
-If there's more that they should know about, though, this is the place to mention:
+The atop module optionally allows for inclusion of the epel class for the installation of the atop package. By default, inclusion of epel on RedHat family systems is disabled assuming that it is managed elsewhere in puppet or content management system like Spacewalk.
 
-* Files, packages, services, or operations that the module will alter, impact, or execute.
-* Dependencies that your module automatically installs.
-* Warnings or other important notices.
+### Setup Requirements
 
-### Setup Requirements **OPTIONAL**
+This module was written for Puppet 5/6 and depends on the following modules:
 
-If your module requires anything extra before setting up (pluginsync enabled, another module, etc.), mention it here.
-
-If your most recent release breaks compatibility or requires particular steps for upgrading, you might want to include an additional "Upgrading" section here.
+* puppetlabs/stdlib
+* stahnma/epel (if `manage_epel => true`)
 
 ### Beginning with atop
 
-The very basic steps needed for a user to get the module up and running. This can include setup steps, if necessary, or it can be an example of the most basic use of the module.
+`include atop` should be enough to get the atop service up and running with process accounting enabled.
 
 ## Usage
 
-Include usage examples for common use cases in the **Usage** section. Show your users how to use your module to solve problems, and be sure to include code examples. Include three to five examples of the most important or common tasks a user can accomplish with your module. Show users how to accomplish more complex tasks that involve different types, classes, and functions working in tandem.
+All parameters for the atop module are contained in the main `atop` class. In order to see how to provide the parameters via hiera, see the hiera.yaml file and the data directory. 
+
+Some examples of using the module:
+
+### Install and configure atop, process accounting and epel on 'osfamily == RedHat'
+```puppet
+class { 'atop':
+  manage_epel => true,
+}
+```
+
+### Install and configure atop but no process accounting pieces
+```puppet
+class { 'atop':
+  manage_package                 => true,
+  manage_service_atop            => true,
+  mamage_service_atopacctd       => false,
+  process_accting_package_manage => false,
+  process_accting_service_manage => false,
+}
+```
 
 ## Reference
 
-This section is deprecated. Instead, add reference information to your code as Puppet Strings comments, and then use Strings to generate a REFERENCE.md in your module. For details on how to add code comments and generate documentation with Strings, see the Puppet Strings [documentation](https://puppet.com/docs/puppet/latest/puppet_strings.html) and [style guide](https://puppet.com/docs/puppet/latest/puppet_strings_style.html)
-
-If you aren't ready to use Strings yet, manually create a REFERENCE.md in the root of your module directory and list out each of your module's classes, defined types, facts, functions, Puppet tasks, task plans, and resource types and providers, along with the parameters for each.
-
-For each element (class, defined type, function, and so on), list:
-
-  * The data type, if applicable.
-  * A description of what the element does.
-  * Valid values, if the data type doesn't make it obvious.
-  * Default value, if any.
-
-For example:
-
-```
-### `pet::cat`
-
-#### Parameters
-
-##### `meow`
-
-Enables vocalization in your cat. Valid options: 'string'.
-
-Default: 'medium-loud'.
-```
+Puppet strings generated documentation is available in the `doc` directory and at [https://millerjl1701.github.io/millerjl1701-atop](https://millerjl1701.github.io/millerjl1701-atop). Also, the puppet strings generated REFERENCE.md file is provided.
 
 ## Limitations
 
-In the Limitations section, list any incompatibilities, known issues, or other warnings.
+For Debian based operating systems, testing via travis of atopacctd is currently disabled as atopacctd does not run in containers correctly. This was discussed in: [https://github.com/Atoptool/atop/issues/11](https://github.com/Atoptool/atop/issues/11)
 
-Debian 9 testing via travis is currently disabled as atopacctd does not run in containers correctly. Testing Debian 9 using vagrant/virtualbox functions correctly. This was discussed in: [https://github.com/Atoptool/atop/issues/11](https://github.com/Atoptool/atop/issues/11)
+The atop program supports a large number of configurable options in `/etc/atoprc` and `~/.atoprc` files. This module currently does not support these files.
+
+This module does not currently handle the installation and configuration of the pieces needed for per-process network statistics. Also on the todo list are development of tasks for remotely querying atop performance metrics as well as the use of atopsar.
 
 ## Development
 
-In the Development section, tell other users the ground rules for contributing to your project and how they should submit their work.
+This module uses the [Puppet Development Kit](https://puppet.com/docs/pdk/1.x/pdk.html) for developing, validating, and testing the module. In addition to running acceptance tests locally using vagrant/virtualbox, GitHub Travis CI tests are performed according to the .travis.yml file. 
 
-## Release Notes/Contributors/Etc. **Optional**
+## Credits
 
-If you aren't using changelog, put your release notes here (though you should consider using changelog). You can also add any additional sections you feel are necessary or important to include here. Please use the `## ` header.
+The atop system and process monitor is authored and maintained by Gerlof Langeveld [gerlof.langeveld@atoptool.nl](mailto:gerlof.langeveld@atoptool.nl).
