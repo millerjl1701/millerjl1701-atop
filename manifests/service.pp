@@ -22,8 +22,8 @@ class atop::service {
 
   if $atop::manage_service_atopacctd {
     service { $atop::service_atopacctd_name:
-      ensure  => $atop::service_atopacctd_ensure,
-      enable  => $atop::service_atopacctd_enable,
+      ensure => $atop::service_atopacctd_ensure,
+      enable => $atop::service_atopacctd_enable,
     }
   }
 }
