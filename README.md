@@ -73,7 +73,7 @@ class { 'atop':
 
 ## Reference
 
-Puppet strings generated documentation is available in the `doc` directory and at [https://millerjl1701.github.io/millerjl1701-atop](https://millerjl1701.github.io/millerjl1701-atop). Also, the puppet strings generated REFERENCE.md file is provided.
+Puppet strings generated documentation is available in the `docs` directory and at [https://millerjl1701.github.io/millerjl1701-atop](https://millerjl1701.github.io/millerjl1701-atop). Also, the puppet strings generated REFERENCE.md file is provided.
 
 ## Limitations
 

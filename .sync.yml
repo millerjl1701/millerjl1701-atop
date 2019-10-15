@@ -1,9 +1,5 @@
 ---
 
-.gitignore:
-  required:
-    - ---/doc/
-
 .gitlab-ci.yml:
   delete: true
 
