@@ -1,9 +1,8 @@
+# @summary
+#   This class is called from the main class to manage the atop service.
+#
 # @api private
 #
-# This class is called from the main class to manage the atop service.
-#
-# @example
-#   include atop::service
 class atop::service {
   assert_private('atop::service is a private class')
 

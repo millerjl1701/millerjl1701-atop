@@ -1,6 +1,7 @@
-# @api private
+# @summary
+#   This class is called from the main class to configure the atop service.
 #
-# This class is called from the main class to configure the atop service.
+# @api private
 #
 class atop::config {
   assert_private('atop::config is a private class')

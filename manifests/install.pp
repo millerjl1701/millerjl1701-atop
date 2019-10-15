@@ -1,6 +1,7 @@
-# @api private
+# @summary
+#   This class is called from the main class to install atop.
 #
-# This class is called from the main class to install atop.
+# @api private
 #
 class atop::install {
   assert_private('atop::install is a private class')
