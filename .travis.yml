@@ -2,6 +2,7 @@
 sudo: false
 dist: xenial
 language: ruby
+if: tag IS blank
 cache: bundler
 before_install:
   - bundle -v
