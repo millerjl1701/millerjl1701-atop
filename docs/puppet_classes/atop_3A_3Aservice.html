@@ -139,8 +139,8 @@ class atop::service {
 
   if $atop::manage_service_atopacctd {
     service { $atop::service_atopacctd_name:
-      ensure  =&gt; $atop::service_atopacctd_ensure,
-      enable  =&gt; $atop::service_atopacctd_enable,
+      ensure =&gt; $atop::service_atopacctd_ensure,
+      enable =&gt; $atop::service_atopacctd_enable,
     }
   }
 }</pre>
