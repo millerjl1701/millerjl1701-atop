@@ -4,7 +4,6 @@ language: ruby
 if: tag IS blank
 cache: bundler
 before_install:
-  - bundle -v
   - rm -f Gemfile.lock
   - gem update --system
   - gem update bundler
@@ -12,9 +11,6 @@ before_install:
   - bundle -v
 script:
   - 'bundle exec rake $CHECK'
-bundler_args: --without system_tests
-rvm:
-  - 2.5.3
 stages:
   - static
   - spec
@@ -22,17 +18,68 @@ stages:
 matrix:
   fast_finish: true
   include:
-    -
+    - rvm: 2.5.3
+      bundler_args: --without system_tests
       env: CHECK="check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop syntax lint metadata_lint"
       stage: static
-    -
+    - rvm: 2.4.5
+      bundler_args: --without system_tests
       env: PUPPET_GEM_VERSION="~> 5.0" CHECK=parallel_spec
-      rvm: 2.4.5
       stage: spec
-    -
+    - rvm: 2.5.3
+      bundler_args: --without system_tests
       env: PUPPET_GEM_VERSION="~> 6.0" CHECK=parallel_spec
-      rvm: 2.5.3
       stage: spec
+    - rvm: 2.4.5
+      bundler_args: --without system_tests
+      env: PUPPET_INSTALL_TYPE=agent BEAKER_IS_PE=no BEAKER_debug=true BEAKER_PUPPET_COLLECTION=puppet5 BEAKER_hypervisor=docker BEAKER_set=docker/centos-6 CHECK=beaker
+      services: docker
+      stage: acceptance
+    - rvm: 2.5.3
+      bundler_args: --without system_tests
+      env: PUPPET_INSTALL_TYPE=agent BEAKER_IS_PE=no BEAKER_debug=true BEAKER_PUPPET_COLLECTION=puppet6 BEAKER_hypervisor=docker BEAKER_set=docker/centos-6 CHECK=beaker
+      services: docker
+      stage: acceptance
+    - rvm: 2.4.5
+      bundler_args: --without system_tests
+      env: PUPPET_INSTALL_TYPE=agent BEAKER_IS_PE=no BEAKER_debug=true BEAKER_PUPPET_COLLECTION=puppet5 BEAKER_hypervisor=docker BEAKER_set=docker/centos-7 CHECK=beaker
+      services: docker
+      stage: acceptance
+    - rvm: 2.5.3
+      bundler_args: --without system_tests
+      env: PUPPET_INSTALL_TYPE=agent BEAKER_IS_PE=no BEAKER_debug=true BEAKER_PUPPET_COLLECTION=puppet6 BEAKER_hypervisor=docker BEAKER_set=docker/centos-7 CHECK=beaker
+      services: docker
+      stage: acceptance
+    - rvm: 2.4.5
+      bundler_args: --without system_tests
+      env: PUPPET_INSTALL_TYPE=agent BEAKER_IS_PE=no BEAKER_debug=true BEAKER_PUPPET_COLLECTION=puppet5 BEAKER_hypervisor=docker BEAKER_set=docker/debian-8 CHECK=beaker
+      services: docker
+      stage: acceptance
+    - rvm: 2.5.3
+      bundler_args: --without system_tests
+      env: PUPPET_INSTALL_TYPE=agent BEAKER_IS_PE=no BEAKER_debug=true BEAKER_PUPPET_COLLECTION=puppet6 BEAKER_hypervisor=docker BEAKER_set=docker/debian-8 CHECK=beaker
+      services: docker
+      stage: acceptance
+    - rvm: 2.4.5
+      bundler_args: --without system_tests
+      env: PUPPET_INSTALL_TYPE=agent BEAKER_IS_PE=no BEAKER_debug=true BEAKER_PUPPET_COLLECTION=puppet5 BEAKER_hypervisor=docker BEAKER_set=docker/ubuntu-1604 CHECK=beaker
+      services: docker
+      stage: acceptance
+    - rvm: 2.5.3
+      bundler_args: --without system_tests
+      env: PUPPET_INSTALL_TYPE=agent BEAKER_IS_PE=no BEAKER_debug=true BEAKER_PUPPET_COLLECTION=puppet6 BEAKER_hypervisor=docker BEAKER_set=docker/ubuntu-1604 CHECK=beaker
+      services: docker
+      stage: acceptance
+    - rvm: 2.4.5
+      bundler_args: --without system_tests
+      env: PUPPET_INSTALL_TYPE=agent BEAKER_IS_PE=no BEAKER_debug=true BEAKER_PUPPET_COLLECTION=puppet5 BEAKER_hypervisor=docker BEAKER_set=docker/ubuntu-1804 CHECK=beaker
+      services: docker
+      stage: acceptance
+    - rvm: 2.5.3
+      bundler_args: --without system_tests
+      env: PUPPET_INSTALL_TYPE=agent BEAKER_IS_PE=no BEAKER_debug=true BEAKER_PUPPET_COLLECTION=puppet6 BEAKER_hypervisor=docker BEAKER_set=docker/ubuntu-1804 CHECK=beaker
+      services: docker
+      stage: acceptance
 branches:
   only:
     - master
