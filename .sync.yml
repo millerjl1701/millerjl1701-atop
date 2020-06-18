@@ -1,5 +1,9 @@
 ---
 
+.gitignore:
+  required:
+    - '/.vscode/'
+
 .gitlab-ci.yml:
   delete: true
 
@@ -10,13 +14,17 @@
   unmanaged: true
 
 appveyor.yml:
-  delete: true
+  selete: true
 
 Gemfile:
   optional:
-    ":system_tests":
+    ':development':
+      - gem: 'github_changelog_generator'
+        git: 'https://github.com/skywinder/github-changelog-generator'
+        ref: '20ee04ba1234e9e83eb2ffb5056e23d641c7a018'
+        condition: "Gem::Version.new(RUBY_VERSION.dup) >= Gem::Version.new('2.2.2')"
+    ':system_tests':
       - gem: beaker
-      - gem: beaker-docker
       - gem: beaker-module_install_helper
       - gem: beaker-puppet_install_helper
       - gem: beaker-rspec
@@ -24,7 +32,10 @@ Gemfile:
       - gem: deep_merge
       - gem: serverspec
 
+Rakefile:
+  default_disabled_lint_checks:
+    - '140chars'
+
 spec/spec_helper.rb:
+  mock_with: ":rspec"
   coverage_report: true
-  minimum_code_coverage_percentage: 100
-  mock_with: ':rspec'
