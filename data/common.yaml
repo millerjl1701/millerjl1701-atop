@@ -1,6 +1,8 @@
 ---
 
 atop::defaults_file_template: 'atop/atop_defaults.erb'
+atop::current_date: '`date +%Y%m%d`'
+atop::logpath: /var/log/atop
 atop::loggenerations: 28
 atop::loginterval: 600
 atop::logopts: '-R'
