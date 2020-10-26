@@ -82,8 +82,10 @@
 # @example
 #   include atop
 class atop (
+  String                     $current_date,
   Stdlib::Unixpath           $defaults_file,
   String                     $defaults_file_template,
+  Stdlib::Unixpath           $logpath,
   Integer                    $loggenerations,
   Integer                    $loginterval,
   String                     $logopts,

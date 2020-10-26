@@ -129,13 +129,22 @@ describe 'atop' do
       end
 
       context "atop class with loggenerations set to 45" do
-        let(:params) { { :loggenerations => 45 } }
+        let(:params) { {
+          :loggenerations => 45,
+          :current_date => 'asdf',
+          :logpath => '/var/log/example',
+        } }
 
         if os_facts[:os]['family'] == 'RedHat'
           if os_facts[:os]['release']['major'] == '6'
             # noop since logopts not used
           else
-            it { is_expected.to contain_file('/etc/sysconfig/atop').with_content(/LOGGENERATIONS=45/) }
+            it {
+             is_expected.to contain_file('/etc/sysconfig/atop')
+              .with_content(/LOGGENERATIONS=45/)
+              .with_content(/CURDAY=asdf/)
+              .with_content(/LOGPATH=\/var\/log\/example/)
+            }
           end
         else
           # noop since not valid parameter on debian or ubuntu

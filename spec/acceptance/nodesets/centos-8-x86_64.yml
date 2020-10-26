@@ -1,0 +1,13 @@
+HOSTS:
+  centos-8-x64:
+    roles:
+      - master
+    platform: el-8-x86_64
+    box: centos/8
+    box_url: https://app.vagrantup.com/centos/boxes/8
+    box_version: ">=1804"
+    hypervisor: vagrant
+CONFIG:
+  log_level: verbose
+  type: foss
+  vagrant_memsize: 4096
